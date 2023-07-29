@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <style>
+        body {
+            margin: 0;
+            text-align: center;
+        }
+
+        .main {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-content: center;
+        }
+
+        .block {
+            font-size: 25px;
+            width: 550px;
+            margin: auto;
+            margin-bottom: 25px;
+            border: 3px solid;
+            border-radius: 25px;
+            padding: 10px;
+        }
+
+        .btn1 {
+            font-size: 18px;
+            width: 170px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Товар</h1>
+    <div class="main">
+        {% for product in products %}
+        {% if product.purchase_status == 'В наличии' %}
+        <div class="block">
+            <p><b>Название:</b> {{ product.name }}</p>
+            <p><b>Цена:</b> {{ product.price }}</p>
+            <form action="" method="get">
+                {% csrf_token %}
+                <a href="{{ product.get_absolut_url }}"><button type="button" class="btn1">Перейти к товару</button></a>
+                <a href="{% url 'user_app:buy' product.id %}"><button type="button" class="btn1">Купить
+                        товар</button></a>
+            </form>
+        </div>
+        {% endif%}
+        {% endfor %}
+    </div>
+</body>
+
+</html>
